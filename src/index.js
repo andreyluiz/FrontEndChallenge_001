@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import promise from 'redux-promise';
 import rootReducer from './reducers';
 
-import { App, SurveysIndex } from './components'
+import { App, SurveysIndex, SurveysShow } from './components'
 
 import './index.css';
 
@@ -19,6 +19,7 @@ ReactDOM.render(
     <Router history={browserHistory}>
       <Route path="/" component={App}>
         <IndexRoute component={SurveysIndex}/>
+        <Route path="/survey/:id" component={SurveysShow}/>
       </Route>
     </Router>
   </Provider>,

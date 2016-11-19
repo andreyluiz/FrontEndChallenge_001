@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { ActionTypes } from './actions'
-const { FETCH_SURVEYS } = ActionTypes
+const { FETCH_SURVEYS, FETCH_SURVEY } = ActionTypes
 
 const INITIAL_STATE = {
   all: [],
@@ -15,6 +15,11 @@ function surveysReducer(state = INITIAL_STATE, action) {
         ...state, 
         all: action.payload.data 
       };
+    case FETCH_SURVEY:
+      return {
+        ...state,
+        survey: action.payload.data
+      }
     default:
       return state;
   };
