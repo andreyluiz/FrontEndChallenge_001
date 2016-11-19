@@ -22,10 +22,12 @@ class SurveysShow extends Component {
   onSubmit(props) {
     let payload = []
     for (const question_id in props) {
-      payload.push({
-        question_id,
-        value: props[question_id]
-      })
+      if (props.hasOwnProperty(question_id)) {
+        payload.push({
+          question_id,
+          value: props[question_id]
+        })
+      }
     }
     this.props.submitCompletions(this.props.params.id, payload).then(() => {
       this.props.successMessage(true);

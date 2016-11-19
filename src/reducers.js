@@ -27,7 +27,7 @@ function surveysReducer(state = INITIAL_STATE, action) {
       })
     default:
       return state;
-  };
+  }
 }
 
 const appReducer = combineReducers({
