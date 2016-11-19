@@ -6,13 +6,17 @@ import './surveys-index.css';
 
 class SurveysIndex extends Component {
   componentWillMount() {
-    this.props.fetchSurveys()
+    this.props.fetchSurveys();
   }
 
   render() {
     return (
       <div className="surveys-list">
         <h1>Surveys</h1>
+        {
+          this.props.showSuccessMessage ? 
+            (<div className="success-message">{'Thank\'s for answering the survey!'}</div>) : (<span></span>)
+        }
         <ul>
           {this.props.surveys.map(survey => (
             <li key={survey.id}>
@@ -30,7 +34,8 @@ class SurveysIndex extends Component {
 
 function mapStateToProps(state) {
   return {
-    surveys: state.surveys.all
+    surveys: state.surveys.all,
+    showSuccessMessage: state.surveys.showSuccessMessage
   };
 }
 

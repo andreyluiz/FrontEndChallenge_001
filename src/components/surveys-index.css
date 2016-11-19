@@ -27,3 +27,8 @@
   -webkit-margin-before: 4px;
   -webkit-margin-after: 4px;
 }
+
+.success-message {
+  padding: 12px;
+  background-color: #6fe57a;
+}

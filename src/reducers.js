@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { ActionTypes } from './actions'
 import { reducer as formReducer } from 'redux-form'
-const { FETCH_SURVEYS, FETCH_SURVEY } = ActionTypes
+const { FETCH_SURVEYS, FETCH_SURVEY, SUCCESS_MESSAGE } = ActionTypes
 
 const INITIAL_STATE = {
   all: [],
@@ -21,6 +21,10 @@ function surveysReducer(state = INITIAL_STATE, action) {
         ...state,
         survey: action.payload.data
       }
+    case SUCCESS_MESSAGE: 
+      return Object.assign({}, state, {
+        showSuccessMessage: action.show
+      })
     default:
       return state;
   };

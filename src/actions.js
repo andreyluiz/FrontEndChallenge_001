@@ -5,10 +5,11 @@ const API_URL = 'http://localhost:8080/api';
 export const ActionTypes = {
   FETCH_SURVEYS: 'FETCH_SURVEYS',
   FETCH_SURVEY: 'FETCH_SURVEY',
-  SUBMIT_COMPLETIONS: 'SUBMIT_COMPLETIONS'
+  SUBMIT_COMPLETIONS: 'SUBMIT_COMPLETIONS',
+  SUCCESS_MESSAGE: 'SUCCESS_MESSAGE'
 };
 
-const { FETCH_SURVEYS, FETCH_SURVEY, SUBMIT_COMPLETIONS } = ActionTypes; // for local use
+const { FETCH_SURVEYS, FETCH_SURVEY, SUBMIT_COMPLETIONS, SUCCESS_MESSAGE } = ActionTypes; // for local use
 
 export function fetchSurveys() {
   const request = axios.get(`${API_URL}/surveys`);
@@ -34,5 +35,12 @@ export function submitCompletions(id, completions) {
   return {
     type: SUBMIT_COMPLETIONS,
     payload: request
+  }
+}
+
+export function successMessage(show) {
+  return {
+    type: SUCCESS_MESSAGE,
+    show
   }
 }

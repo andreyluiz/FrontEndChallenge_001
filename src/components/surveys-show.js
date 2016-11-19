@@ -2,14 +2,21 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { fetchSurvey, submitCompletions } from '../actions';
+import { fetchSurvey, submitCompletions, successMessage } from '../actions';
 import './surveys-show.css';
 
 class SurveysShow extends Component {
   static contextTypes = {
     router: React.PropTypes.object
   }
+  constructor(props) {
+    super(props);
+    this.state = {
+      successMessage: null
+    }
+  }
   componentWillMount() {
+    this.props.successMessage(false);
     this.props.fetchSurvey(this.props.params.id);
   }
   onSubmit(props) {
@@ -21,6 +28,7 @@ class SurveysShow extends Component {
       })
     }
     this.props.submitCompletions(this.props.params.id, payload).then(() => {
+      this.props.successMessage(true);
       this.context.router.push('/');
     })
   }
