@@ -1,0 +1,33 @@
+.surveys-list {
+  color: #212121;
+  border: 1px solid #959595;
+  padding: 24px;
+}
+
+.survey-list:hover {
+
+}
+
+.surveys-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.surveys-list ul li {
+  padding: 12px;
+  transition: 0.2s;
+  border-bottom: 1px solid #CECECE;
+}
+
+.surveys-list ul li:hover {
+  background-color: #DFDFDF;
+}
+
+.surveys-list ul li a {
+  color: #482ae1 !important;
+}
+
+#root > div > ul > li a > p {
+  -webkit-margin-before: 4px;
+  -webkit-margin-after: 4px;
+}

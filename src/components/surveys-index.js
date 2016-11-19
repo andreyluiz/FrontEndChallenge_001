@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import { fetchSurveys } from '../actions';
+import './surveys-index.css';
 
 class SurveysIndex extends Component {
   componentWillMount() {
@@ -10,15 +11,15 @@ class SurveysIndex extends Component {
 
   render() {
     return (
-      <div>
+      <div className="surveys-list">
         <h1>Surveys</h1>
         <ul>
           {this.props.surveys.map(survey => (
             <li key={survey.id}>
-              <Link to={`survey/${survey.id}`}>
+              <Link to={`/survey/${survey.id}`}>
                 <h3>{survey.title}</h3>
-                <p>{survey.tagline}</p>
               </Link>
+              <p>{survey.tagline}</p>
             </li>
           ))}
         </ul>
