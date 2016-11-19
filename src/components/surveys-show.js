@@ -1,12 +1,28 @@
 import React, { Component } from 'react';
+import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { fetchSurvey } from '../actions';
+import { fetchSurvey, submitCompletions } from '../actions';
 import './surveys-show.css';
 
 class SurveysShow extends Component {
+  static contextTypes = {
+    router: React.PropTypes.object
+  }
   componentWillMount() {
     this.props.fetchSurvey(this.props.params.id);
+  }
+  onSubmit(props) {
+    let payload = []
+    for (const question_id in props) {
+      payload.push({
+        question_id,
+        value: props[question_id]
+      })
+    }
+    this.props.submitCompletions(this.props.params.id, payload).then(() => {
+      this.context.router.push('/');
+    })
   }
   render() {
     const { survey } = this.props;
@@ -17,20 +33,22 @@ class SurveysShow extends Component {
 
     let questionCount = 1;
 
+    const { handleSubmit } = this.props;
+
     return (
       <div className="survey-show">
         <h1>{survey.title}</h1>
         <h3>{survey.tagline}</h3>
 
-        <form>
+        <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
           {survey.questions.map(question => (
-            <div className="survey-question">
+            <div key={question.id} className="survey-question">
               <p><b>{questionCount++})</b> {question.title}</p>
               <div className="question-options">
                 {question.options.map(option => (
-                  <div className="option">
+                  <div key={option} className="option">
                     <label>
-                      <input type="radio" value={option}/>
+                      <Field component="input" type="radio" name={question.id} value={option}/>
                       <span>{option}</span>
                     </label>
                   </div>
@@ -61,7 +79,9 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  { fetchSurvey }
-)(SurveysShow)
+SurveysShow = reduxForm({
+  form: 'SurveysShowForm'
+})(SurveysShow);
+
+SurveysShow = connect(mapStateToProps, { fetchSurvey, submitCompletions, successMessage })(SurveysShow);
+export default SurveysShow;

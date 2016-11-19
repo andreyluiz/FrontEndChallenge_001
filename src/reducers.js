@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { ActionTypes } from './actions'
+import { reducer as formReducer } from 'redux-form'
 const { FETCH_SURVEYS, FETCH_SURVEY } = ActionTypes
 
 const INITIAL_STATE = {
@@ -26,7 +27,8 @@ function surveysReducer(state = INITIAL_STATE, action) {
 }
 
 const appReducer = combineReducers({
-  surveys: surveysReducer
+  surveys: surveysReducer,
+  form: formReducer
 });
 
 export default appReducer;
