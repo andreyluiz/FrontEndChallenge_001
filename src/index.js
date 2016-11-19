@@ -1,10 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Router, IndexRoute, Route, browserHistory } from 'react-router';
 import { createStore, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
 import promise from 'redux-promise';
 import rootReducer from './reducers';
 
-import App from './App';
+import { App, SurveysIndex } from './components'
+
 import './index.css';
 
 const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
@@ -12,6 +15,12 @@ const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
 const store = createStoreWithMiddleware(rootReducer);
 
 ReactDOM.render(
-  <App />,
+  <Provider store={store}>
+    <Router history={browserHistory}>
+      <Route path="/" component={App}>
+        <IndexRoute component={SurveysIndex}/>
+      </Route>
+    </Router>
+  </Provider>,
   document.getElementById('root')
 );
