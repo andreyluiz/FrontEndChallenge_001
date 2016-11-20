@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { fetchSurvey, submitCompletions, successMessage } from '../actions';
+import { fetchSurvey, submitCompletions, successMessage, submitMessage } from '../actions';
 import './surveys-show.css';
 
 class SurveysShow extends Component {
@@ -20,16 +20,9 @@ class SurveysShow extends Component {
     this.props.fetchSurvey(this.props.params.id);
   }
   onSubmit(props) {
-    let payload = []
-    for (const question_id in props) {
-      if (props.hasOwnProperty(question_id)) {
-        payload.push({
-          question_id,
-          value: props[question_id]
-        })
-      }
-    }
-    this.props.submitCompletions(this.props.params.id, payload).then(() => {
+    this.props.submitMessage(true);
+    this.props.submitCompletions(this.props.params.id, props).then(() => {
+      this.props.submitMessage(false);
       this.props.successMessage(true);
       this.context.router.push('/');
     })
@@ -38,7 +31,17 @@ class SurveysShow extends Component {
     const { survey } = this.props;
 
     if (!survey) {
-      return (<p>Loading...</p>);
+      return (<p>Loading survey...</p>);
+    }
+
+    if (this.props.showSubmitMessage) {
+      return (
+        <div className="survey-show">
+          <h1>{survey.title}</h1>
+          <h3>{survey.tagline}</h3>
+          <p>Submiting your completion...</p>
+        </div>
+      );
     }
 
     let questionCount = 1;
@@ -85,7 +88,8 @@ class SurveysShow extends Component {
 
 function mapStateToProps(state) {
   return {
-    survey: state.surveys.survey
+    survey: state.surveys.survey,
+    showSubmitMessage: state.surveys.showSubmitMessage
   }
 }
 
@@ -93,5 +97,5 @@ SurveysShow = reduxForm({
   form: 'SurveysShowForm'
 })(SurveysShow);
 
-SurveysShow = connect(mapStateToProps, { fetchSurvey, submitCompletions, successMessage })(SurveysShow);
+SurveysShow = connect(mapStateToProps, { fetchSurvey, submitCompletions, successMessage, submitMessage })(SurveysShow);
 export default SurveysShow;

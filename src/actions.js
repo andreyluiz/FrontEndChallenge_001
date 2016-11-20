@@ -6,10 +6,11 @@ export const ActionTypes = {
   FETCH_SURVEYS: 'FETCH_SURVEYS',
   FETCH_SURVEY: 'FETCH_SURVEY',
   SUBMIT_COMPLETIONS: 'SUBMIT_COMPLETIONS',
-  SUCCESS_MESSAGE: 'SUCCESS_MESSAGE'
+  SUCCESS_MESSAGE: 'SUCCESS_MESSAGE',
+  SUBMIT_MESSAGE: 'SUBMIT_MESSAGE'
 };
 
-const { FETCH_SURVEYS, FETCH_SURVEY, SUBMIT_COMPLETIONS, SUCCESS_MESSAGE } = ActionTypes; // for local use
+const { FETCH_SURVEYS, FETCH_SURVEY, SUBMIT_COMPLETIONS, SUCCESS_MESSAGE, SUBMIT_MESSAGE } = ActionTypes; // for local use
 
 export function fetchSurveys() {
   const request = axios.get(`${API_URL}/surveys`);
@@ -21,7 +22,7 @@ export function fetchSurveys() {
 };
 
 export function fetchSurvey(id) {
-  const request = axios.get(`${API_URL}/survey/${id}`);
+  const request = axios.get(`${API_URL}/surveys/${id}`);
 
   return {
     type: FETCH_SURVEY,
@@ -30,7 +31,18 @@ export function fetchSurvey(id) {
 }
 
 export function submitCompletions(id, completions) {
-  const request = axios.post(`${API_URL}/survey/${id}/completions`, completions);
+
+  let payload = []
+  for (const question_id in completions) {
+    if (completions.hasOwnProperty(question_id)) {
+      payload.push({
+        question_id,
+        value: completions[question_id]
+      })
+    }
+  }
+
+  const request = axios.post(`${API_URL}/surveys/${id}/completions`, completions);
 
   return {
     type: SUBMIT_COMPLETIONS,
@@ -43,4 +55,11 @@ export function successMessage(show) {
     type: SUCCESS_MESSAGE,
     show
   }
+}
+
+export function submitMessage(show) {
+  return {
+    type: SUBMIT_MESSAGE,
+    show
+  };
 }
