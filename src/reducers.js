@@ -16,12 +16,12 @@ function surveysReducer(state = INITIAL_STATE, action) {
     case FETCH_SURVEYS:
       return { 
         ...state, 
-        all: action.payload.data 
+        all: action.payload.data.surveys
       };
     case FETCH_SURVEY:
       return {
         ...state,
-        survey: action.payload.data
+        survey: action.payload.data.survey
       }
     case SUCCESS_MESSAGE: 
       return Object.assign({}, state, {

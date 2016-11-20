@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/api';
+const API_URL = 'https://private-anon-58e6d27814-surveysmock.apiary-mock.com/api';
 
 export const ActionTypes = {
   FETCH_SURVEYS: 'FETCH_SURVEYS',
