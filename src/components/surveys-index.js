@@ -10,6 +10,9 @@ class SurveysIndex extends Component {
   }
 
   render() {
+    if (!this.props.surveys) {
+      return (<span>Loading the Surveys list...</span>);
+    }
     return (
       <div className="surveys-list">
         <h1>Surveys</h1>
